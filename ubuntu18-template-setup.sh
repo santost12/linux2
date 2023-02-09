@@ -51,6 +51,6 @@ if [ $firewall_template_confirm == "y" ]; then
 
 fi
 
-echo -e  "\nDisabling password/ssh key remote root login..."
+echo -e "\nDisabling password/ssh key remote root login..."
 sleep 1
 sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config
