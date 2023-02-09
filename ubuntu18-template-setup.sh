@@ -5,14 +5,15 @@ if [ "$EUID" -ne 0 ]; then
   exit
 fi
 
+original_hostname="ubuntutemplate"
 read -p "New hostname: " new_hostname
 
 echo -e  "\nYou entered: " $new_hostname
 read -p "Is this okay? (y/n) " confirmation
 
 if [ $confirmation == "y" ]; then
-  sed -i 's/ubuntutemplate/$new_hostname/g' /etc/hostname
-  sed -i 's/ubuntutemplate/$new_hostname/g' /etc/hosts
+  sed -i "s/$original_hostname/${new_hostname}/" /etc/hostname
+  sed -i "s/$original_hostname/${new_hostname}/" /etc/hosts
 else
   exit
 fi
