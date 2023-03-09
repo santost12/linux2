@@ -97,7 +97,7 @@ create_share_folders() {
 
 download_smbconfig() {
     echo "I can download a samba config for you."
-    echo "See: https://github.com/santost12/linux2/blob/main/samba.conf"
+    echo "See: https://github.com/santost12/linux2/blob/main/smb.conf"
     read -p "Is this okay? (y/n) " confirmation
     
     if [ $confirmation != "y" ]; then
