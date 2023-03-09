@@ -5,6 +5,10 @@ if [ "$EUID" -ne 0 ]; then
   exit
 fi
 
+install_samba() {
+    apt install samba smbclient -y
+}
+
 make_local_groups() {
     local g_counter=1
     while [ $g_counter -lt 6 ]; do
@@ -108,6 +112,7 @@ download_smbconfig() {
     curl https://raw.githubusercontent.com/santost12/linux2/main/smb.conf > /etc/samba/smb.conf
 }
 
+install_samba
 make_local_groups
 make_local_users
 add_users_to_g1
