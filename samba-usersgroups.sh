@@ -84,7 +84,7 @@ add_samba_users() {
 samba_password() {
     local u_counter=1
     while [ $u_counter -lt 13 ]; do
-        echo -e "password1234\npassword1234\n" | smbpasswd -s user$u_counter
+        printf "password1234\npassword1234\n" | smbpasswd -s user$u_counter
         ((u_counter++))
     done
 }
