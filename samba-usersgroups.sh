@@ -76,9 +76,18 @@ add_samba_users() {
     done
 }
 
+samba_password() {
+    local u_counter=1
+    while [ $u_counter -lt 13 ]; do
+        echo -e "password1234\npassword1234\n" | smbpasswd -s user$u_counter
+        ((u_counter++))
+    done
+}
+
 
 make_local_groups
 make_local_users
 add_users_to_g1
 add_users_to_other_groups
 add_samba_users
+samba_password
