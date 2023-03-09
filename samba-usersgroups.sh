@@ -6,30 +6,30 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 install_samba() {
-    apt install samba smbclient -y
+    apt install samba smbclient curl -y
 }
 
 make_local_groups() {
-    local g_counter=1
-    while [ $g_counter -lt 6 ]; do
-        groupadd group$g_counter
-        ((g_counter++))
+    local counter=1
+    while [ $counter -lt 6 ]; do
+        groupadd group$counter
+        ((counter++))
     done
 }
 
 make_local_users() {
-    local u_counter=1
-    while [ $u_counter -lt 13 ]; do
-        useradd -m user$u_counter -G group1 -s /bin/false -p "password1234"
-        ((u_counter++))
+    local counter=1
+    while [ $counter -lt 13 ]; do
+        useradd -m user$counter -G group1 -s /bin/false -p "password1234"
+        ((counter++))
     done
 }
 
 add_users_to_g1() {
-    local u_counter=1
-    while [ $u_counter -lt 13 ]; do
-        gpasswd -a user$u_counter group1
-        ((u_counter++))
+    local counter=1
+    while [ $counter -lt 13 ]; do
+        gpasswd -a user$counter group1
+        ((counter++))
     done
 }
 
@@ -78,18 +78,18 @@ add_users_to_other_groups() {
 }
 
 add_samba_users() {
-    local u_counter=1
-    while [ $u_counter -lt 13 ]; do
-        smbpasswd -n -a user$u_counter
-        ((u_counter++))
+    local counter=1
+    while [ $counter -lt 13 ]; do
+        smbpasswd -n -a user$counter
+        ((counter++))
     done
 }
 
 samba_password() {
-    local u_counter=1
-    while [ $u_counter -lt 13 ]; do
-        printf "password1234\npassword1234\n" | smbpasswd -s user$u_counter
-        ((u_counter++))
+    local counter=1
+    while [ $counter -lt 13 ]; do
+        printf "password1234\npassword1234\n" | smbpasswd -s user$counter
+        ((counter++))
     done
 }
 
@@ -108,7 +108,6 @@ download_smbconfig() {
         exit
     fi
     
-    apt install curl -y
     curl https://raw.githubusercontent.com/santost12/linux2/main/smb.conf > /etc/samba/smb.conf
 }
 
