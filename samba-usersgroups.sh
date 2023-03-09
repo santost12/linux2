@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$EUID" -ne 0 ]; then
+  echo "Error: Please run this script as root!"
+  exit
+fi
+
 make_local_groups() {
     local g_counter=1
     while [ $g_counter -lt 6 ]; do
@@ -84,6 +89,24 @@ samba_password() {
     done
 }
 
+create_share_folders() {
+    if [ ! -d /samba ]; then
+        mkdir -p /samba/shares && mkdir /samba/shares/{share1,share2,share3,share4,share5}
+    fi
+}
+
+download_smbconfig() {
+    echo "I can download a samba config for you."
+    echo "See: https://github.com/santost12/linux2/blob/main/samba.conf"
+    read -p "Is this okay? (y/n) " confirmation
+    
+    if [ $confirmation != "y" ]; then
+        exit
+    fi
+    
+    apt install curl -y
+    curl https://raw.githubusercontent.com/santost12/linux2/main/smb.conf > /etc/samba/smb.conf
+}
 
 make_local_groups
 make_local_users
@@ -91,3 +114,5 @@ add_users_to_g1
 add_users_to_other_groups
 add_samba_users
 samba_password
+create_share_folders
+download_smbconfig
